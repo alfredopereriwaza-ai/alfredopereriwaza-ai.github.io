@@ -5,9 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Fútbol Uruguay</title>
+    <title>Fútbol Zone ⚽</title>
 
     <style>
+
+        /* =========================
+           DISEÑO GENERAL
+        ========================= */
+
         * {
             box-sizing: border-box;
         }
@@ -17,27 +22,31 @@
             font-family: Arial, sans-serif;
             background: #101010;
             color: white;
+            transition: 0.3s;
+        }
+
+        body.claro {
+            background: #eeeeee;
+            color: #111111;
         }
 
         nav {
             background: #191919;
-            padding: 15px;
+            padding: 12px;
             text-align: center;
             position: sticky;
             top: 0;
-            z-index: 10;
-            border-bottom: 1px solid #292929;
+            z-index: 100;
         }
 
         nav button {
-            background: #252525;
+            background: #292929;
             color: white;
             border: none;
-            padding: 11px 15px;
+            padding: 10px 13px;
             margin: 4px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
         }
 
         nav button:hover {
@@ -45,9 +54,9 @@
         }
 
         .contenido {
-            max-width: 950px;
+            max-width: 1000px;
             margin: auto;
-            padding: 30px 20px;
+            padding: 30px 15px;
             text-align: center;
         }
 
@@ -61,11 +70,16 @@
 
         .tarjeta {
             background: #1c1c1c;
+            border: 1px solid #292929;
             padding: 20px;
             margin: 15px auto;
-            border-radius: 12px;
-            max-width: 650px;
-            border: 1px solid #292929;
+            border-radius: 15px;
+            max-width: 700px;
+        }
+
+        body.claro .tarjeta {
+            background: white;
+            border-color: #ddd;
         }
 
         .boton {
@@ -75,8 +89,8 @@
             padding: 12px 20px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
-            margin: 6px;
+            margin: 5px;
+            font-size: 15px;
         }
 
         .boton:hover {
@@ -84,84 +98,53 @@
         }
 
         .buscador {
-            padding: 12px;
             width: 90%;
-            max-width: 500px;
+            max-width: 550px;
+            padding: 13px;
             border-radius: 8px;
             border: none;
             margin: 15px;
             font-size: 16px;
         }
 
-        .opcion {
-            display: block;
-            width: 90%;
-            max-width: 450px;
-            margin: 10px auto;
-            padding: 13px;
-            background: #292929;
-            color: white;
-            border: 1px solid #444;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            max-width: 850px;
+            margin: auto;
         }
 
-        .opcion:hover {
-            background: #00a866;
+        .mini {
+            background: #1c1c1c;
+            border: 1px solid #292929;
+            padding: 20px;
+            border-radius: 15px;
         }
 
-        .marcador {
-            font-size: 22px;
-            margin: 15px;
+        body.claro .mini {
+            background: white;
+            border-color: #ddd;
+        }
+
+        .escudo {
+            font-size: 45px;
+        }
+
+        .puntos {
+            font-size: 24px;
             color: #00ff88;
             font-weight: bold;
         }
 
-        .penal {
-            font-size: 70px;
-            margin: 20px;
-        }
-
-        .zona-penal {
-            background: #0b5d35;
-            border: 4px solid white;
-            width: 320px;
-            height: 210px;
-            margin: 20px auto;
-            position: relative;
-            border-radius: 10px;
-        }
-
-        .arquero {
-            font-size: 45px;
-            position: absolute;
-            top: 75px;
-            left: 135px;
-        }
-
-        .resultado {
-            font-size: 22px;
+        .correcto {
+            color: #00ff88;
             font-weight: bold;
-            margin: 20px;
         }
 
-        .badge {
-            display: inline-block;
-            background: #00a866;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-        }
-
-        .vivo {
+        .incorrecto {
             color: #ff4444;
             font-weight: bold;
-        }
-
-        .pista {
-            color: #bbbbbb;
-            font-style: italic;
         }
 
         footer {
@@ -169,899 +152,1501 @@
             padding: 30px;
             color: #777;
         }
+
+        @media(max-width:600px) {
+
+            nav button {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            .contenido {
+                padding: 20px 10px;
+            }
+
+        }
+
     </style>
 </head>
 
 <body>
 
-    <nav>
-        <button onclick="mostrar('inicio')">🏠 Inicio</button>
-        <button onclick="mostrar('equipos')">⚽ Equipos</button>
-        <button onclick="mostrar('jugadores')">👤 Jugadores</button>
-        <button onclick="mostrar('partidos')">🏆 Partidos</button>
-        <button onclick="mostrar('tabla')">📊 Tabla</button>
-        <button onclick="mostrar('noticias')">📰 Noticias</button>
-        <button onclick="mostrar('estadios')">🏟️ Estadios</button>
-        <button onclick="mostrar('fichajes')">🔄 Fichajes</button>
-        <button onclick="mostrar('juegos')">🎮 Juegos</button>
-    </nav>
-
-    <div id="contenido" class="contenido"></div>
-
-    <footer>
-        ⚽ Fútbol Uruguay | Página creada con HTML, CSS y JavaScript
-    </footer>
-
-    <script>
-
-        // =========================
-        // DATOS
-        // =========================
-
-        const equipos = [
-            "Peñarol",
-            "Nacional",
-            "Cerro Largo",
-            "Defensor Sporting",
-            "Liverpool",
-            "Danubio",
-            "Boston River",
-            "Montevideo City Torque"
-        ];
-
-        const jugadores = [
-            "Federico Valverde",
-            "Luis Suárez",
-            "Darwin Núñez",
-            "Facundo Pellistri",
-            "Manuel Ugarte",
-            "Ronald Araújo",
-            "José María Giménez",
-            "Rodrigo Bentancur"
-        ];
-
-
-        // =========================
-        // CAMBIAR SECCIONES
-        // =========================
+<nav>
 
-        function mostrar(seccion) {
+    <button onclick="mostrar('inicio')">🏠 Inicio</button>
 
-            const contenido = document.getElementById("contenido");
-
-            if (seccion === "inicio") {
-
-                contenido.innerHTML = `
-                    <h1>⚽ Fútbol Uruguay</h1>
+    <button onclick="mostrar('equipos')">⚽ Equipos</button>
 
-                    <div class="tarjeta">
-                        <h2>🔥 Bienvenido</h2>
-                        <p>
-                            Noticias, equipos, jugadores, partidos,
-                            fichajes y juegos de fútbol.
-                        </p>
-                    </div>
+    <button onclick="mostrar('jugadores')">👤 Jugadores</button>
 
-                    <div class="tarjeta">
-                        <span class="badge">🎮 NUEVO</span>
-                        <h2>Zona de juegos</h2>
-                        <p>Probá nuestros juegos de fútbol.</p>
+    <button onclick="mostrar('partidos')">🏆 Partidos</button>
 
-                        <button class="boton"
-                            onclick="mostrar('juegos')">
-                            Jugar ahora
-                        </button>
-                    </div>
-                `;
-            }
+    <button onclick="mostrar('tabla')">📊 Tabla</button>
 
+    <button onclick="mostrar('noticias')">📰 Noticias</button>
 
-            // =========================
-            // EQUIPOS
-            // =========================
+    <button onclick="mostrar('estadios')">🏟️ Estadios</button>
 
-            else if (seccion === "equipos") {
+    <button onclick="mostrar('fichajes')">🔄 Fichajes</button>
 
-                contenido.innerHTML = `
-                    <h1>⚽ Equipos</h1>
+    <button onclick="mostrar('juegos')">🎮 Juegos</button>
 
-                    <input
-                        class="buscador"
-                        id="buscarEquipo"
-                        placeholder="🔎 Buscar equipo..."
-                        oninput="buscarEquipo()"
-                    >
+    <button onclick="mostrar('carrera')">🏆 Carrera</button>
 
-                    <div id="listaEquipos"></div>
-                `;
+    <button onclick="cambiarTema()">🌙 Tema</button>
 
-                mostrarListaEquipos(equipos);
-            }
+</nav>
 
 
-            // =========================
-            // JUGADORES
-            // =========================
+<div id="contenido" class="contenido"></div>
 
-            else if (seccion === "jugadores") {
 
-                contenido.innerHTML = `
-                    <h1>👤 Jugadores</h1>
+<footer>
 
-                    <input
-                        class="buscador"
-                        id="buscarJugador"
-                        placeholder="🔎 Buscar jugador..."
-                        oninput="buscarJugador()"
-                    >
+    ⚽ Fútbol Zone
 
-                    <div id="listaJugadores"></div>
-                `;
+    <br><br>
 
-                mostrarListaJugadores(jugadores);
-            }
+    Página creada con HTML, CSS y JavaScript
 
+</footer>
 
-            // =========================
-            // PARTIDOS
-            // =========================
 
-            else if (seccion === "partidos") {
+<script>
 
-                contenido.innerHTML = `
-                    <h1>🏆 Partidos</h1>
+/* =====================================================
+   DATOS
+===================================================== */
 
-                    <div class="tarjeta">
-                        <span class="vivo">🔴 EN VIVO</span>
+const equipos = [
 
-                        <h2>Peñarol 2 - 1 Nacional</h2>
+    {
+        nombre: "Peñarol",
+        escudo: "🟡⚫"
+    },
 
-                        <p>
-                            🏟️ Estadio Campeón del Siglo
-                        </p>
-                    </div>
+    {
+        nombre: "Nacional",
+        escudo: "🔵⚪"
+    },
 
-                    <div class="tarjeta">
-                        <h2>Cerro Largo 1 - 1 Liverpool</h2>
+    {
+        nombre: "Liverpool",
+        escudo: "⚫🔵"
+    },
 
-                        <p>
-                            Próximo partido
-                        </p>
-                    </div>
-                `;
-            }
+    {
+        nombre: "Defensor Sporting",
+        escudo: "🟣⚪"
+    },
 
+    {
+        nombre: "Cerro Largo",
+        escudo: "🔵⚪"
+    },
 
-            // =========================
-            // TABLA
-            // =========================
+    {
+        nombre: "Danubio",
+        escudo: "⚫⚪"
+    }
 
-            else if (seccion === "tabla") {
+];
 
-                contenido.innerHTML = `
-                    <h1>📊 Tabla de posiciones</h1>
 
-                    <div class="tarjeta">🥇 Peñarol - 10 pts</div>
+const jugadores = [
 
-                    <div class="tarjeta">🥈 Nacional - 8 pts</div>
+    {
+        nombre: "Federico Valverde",
+        posicion: "Mediocampista",
+        pais: "🇺🇾 Uruguay"
+    },
 
-                    <div class="tarjeta">🥉 Liverpool - 6 pts</div>
+    {
+        nombre: "Luis Suárez",
+        posicion: "Delantero",
+        pais: "🇺🇾 Uruguay"
+    },
 
-                    <div class="tarjeta">4️⃣ Cerro Largo - 4 pts</div>
+    {
+        nombre: "Darwin Núñez",
+        posicion: "Delantero",
+        pais: "🇺🇾 Uruguay"
+    },
 
-                    <div class="tarjeta">
-                        5️⃣ Defensor Sporting - 3 pts
-                    </div>
-                `;
-            }
+    {
+        nombre: "Ronald Araújo",
+        posicion: "Defensor",
+        pais: "🇺🇾 Uruguay"
+    },
 
+    {
+        nombre: "Manuel Ugarte",
+        posicion: "Mediocampista",
+        pais: "🇺🇾 Uruguay"
+    },
 
-            // =========================
-            // NOTICIAS
-            // =========================
+    {
+        nombre: "Rodrigo Bentancur",
+        posicion: "Mediocampista",
+        pais: "🇺🇾 Uruguay"
+    }
 
-            else if (seccion === "noticias") {
+];
 
-                contenido.innerHTML = `
-                    <h1>📰 Noticias</h1>
 
-                    <div class="tarjeta">
-                        <h2>🔥 Gran partido</h2>
-                        <p>
-                            Se viene un partido muy esperado
-                            entre dos grandes equipos.
-                        </p>
-                    </div>
+/* =====================================================
+   CAMBIAR SECCIONES
+===================================================== */
 
-                    <div class="tarjeta">
-                        <h2>⭐ Nueva figura uruguaya</h2>
-                        <p>
-                            Un joven jugador comienza
-                            a destacarse.
-                        </p>
-                    </div>
+function mostrar(seccion) {
 
-                    <div class="tarjeta">
-                        <h2>🏆 Nuevo torneo</h2>
-                        <p>
-                            Los equipos se preparan
-                            para una nueva competición.
-                        </p>
-                    </div>
-                `;
-            }
+    const contenido =
+        document.getElementById("contenido");
 
 
-            // =========================
-            // ESTADIOS
-            // =========================
+    /* INICIO */
 
-            else if (seccion === "estadios") {
+    if (seccion === "inicio") {
 
-                contenido.innerHTML = `
-                    <h1>🏟️ Estadios</h1>
+        contenido.innerHTML = `
 
-                    <div class="tarjeta">
-                        <h2>🏟️ Campeón del Siglo</h2>
-                        <p>Peñarol</p>
-                    </div>
+            <h1>⚽ Fútbol Zone</h1>
 
-                    <div class="tarjeta">
-                        <h2>🏟️ Gran Parque Central</h2>
-                        <p>Nacional</p>
-                    </div>
+            <div class="tarjeta">
 
-                    <div class="tarjeta">
-                        <h2>🏟️ Estadio Luis Franzini</h2>
-                        <p>Defensor Sporting</p>
-                    </div>
-                `;
-            }
+                <h2>🔥 Bienvenido</h2>
 
+                <p>
 
-            // =========================
-            // FICHAJES
-            // =========================
+                    Noticias, equipos, jugadores,
+                    partidos, juegos y modo carrera.
 
-            else if (seccion === "fichajes") {
+                </p>
 
-                contenido.innerHTML = `
-                    <h1>🔄 Mercado de fichajes</h1>
+            </div>
 
-                    <div class="tarjeta">
-                        <h2>⭐ Nuevo fichaje</h2>
-                        <p>
-                            Un nuevo jugador llega al equipo.
-                        </p>
-                    </div>
 
-                    <div class="tarjeta">
-                        <h2>🔥 Nuevo delantero</h2>
-                        <p>
-                            El equipo busca reforzar el ataque.
-                        </p>
-                    </div>
-                `;
-            }
+            <div class="grid">
 
+                <div class="mini">
 
-            // =========================
-            // JUEGOS
-            // =========================
+                    <div class="escudo">🎮</div>
 
-            else if (seccion === "juegos") {
+                    <h2>Juegos</h2>
 
-                contenido.innerHTML = `
-                    <h1>🎮 Zona de Juegos</h1>
+                    <p>
 
-                    <div class="tarjeta">
-                        <h2>🧠 Quiz de fútbol</h2>
-                        <p>
-                            Contestá preguntas y conseguí puntos.
-                        </p>
+                        Jugá al quiz,
+                        penales y más.
 
-                        <button class="boton"
-                            onclick="quiz()">
-                            Jugar Quiz
-                        </button>
-                    </div>
+                    </p>
 
-                    <div class="tarjeta">
-                        <h2>🥅 Penales</h2>
-                        <p>
-                            Elegí dónde patear.
-                        </p>
-
-                        <button class="boton"
-                            onclick="penales()">
-                            Jugar Penales
-                        </button>
-                    </div>
-
-                    <div class="tarjeta">
-                        <h2>👤 Adiviná el jugador</h2>
-                        <p>
-                            Descubrí quién es mediante pistas.
-                        </p>
-
-                        <button class="boton"
-                            onclick="adivinarJugador()">
-                            Jugar
-                        </button>
-                    </div>
-                `;
-            }
-        }
-
-
-        // =========================
-        // LISTA DE EQUIPOS
-        // =========================
-
-        function mostrarListaEquipos(lista) {
-
-            const contenedor =
-                document.getElementById("listaEquipos");
-
-            contenedor.innerHTML = "";
-
-            lista.forEach(function(equipo) {
-
-                contenedor.innerHTML += `
-                    <div class="tarjeta">
-                        ⚽ ${equipo}
-                    </div>
-                `;
-            });
-        }
-
-
-        function buscarEquipo() {
-
-            const texto =
-                document.getElementById("buscarEquipo")
-                .value
-                .toLowerCase();
-
-            const resultados =
-                equipos.filter(function(equipo) {
-
-                    return equipo
-                        .toLowerCase()
-                        .includes(texto);
-                });
-
-            mostrarListaEquipos(resultados);
-        }
-
-
-        // =========================
-        // LISTA DE JUGADORES
-        // =========================
-
-        function mostrarListaJugadores(lista) {
-
-            const contenedor =
-                document.getElementById("listaJugadores");
-
-            contenedor.innerHTML = "";
-
-            lista.forEach(function(jugador) {
-
-                contenedor.innerHTML += `
-                    <div class="tarjeta">
-                        👤 ${jugador}
-                    </div>
-                `;
-            });
-        }
-
-
-        function buscarJugador() {
-
-            const texto =
-                document.getElementById("buscarJugador")
-                .value
-                .toLowerCase();
-
-            const resultados =
-                jugadores.filter(function(jugador) {
-
-                    return jugador
-                        .toLowerCase()
-                        .includes(texto);
-                });
-
-            mostrarListaJugadores(resultados);
-        }
-
-
-        // ==================================================
-        // JUEGO 1: QUIZ
-        // ==================================================
-
-        let preguntaActual = 0;
-        let puntosQuiz = 0;
-
-        const preguntas = [
-
-            {
-                pregunta: "¿Qué selección ganó el Mundial 2022?",
-                opciones: [
-                    "Argentina",
-                    "Francia",
-                    "Brasil",
-                    "Uruguay"
-                ],
-                correcta: "Argentina"
-            },
-
-            {
-                pregunta: "¿En qué posición juega normalmente un arquero?",
-                opciones: [
-                    "Delantero",
-                    "Portero",
-                    "Mediocampista",
-                    "Defensa"
-                ],
-                correcta: "Portero"
-            },
-
-            {
-                pregunta: "¿Cuántos jugadores tiene un equipo en cancha al comenzar un partido?",
-                opciones: [
-                    "9",
-                    "10",
-                    "11",
-                    "12"
-                ],
-                correcta: "11"
-            },
-
-            {
-                pregunta: "¿Qué país ganó el Mundial 2018?",
-                opciones: [
-                    "Croacia",
-                    "Francia",
-                    "Alemania",
-                    "España"
-                ],
-                correcta: "Francia"
-            },
-
-            {
-                pregunta: "¿Qué tarjeta significa expulsión?",
-                opciones: [
-                    "Verde",
-                    "Amarilla",
-                    "Azul",
-                    "Roja"
-                ],
-                correcta: "Roja"
-            }
-
-        ];
-
-
-        function quiz() {
-
-            preguntaActual = 0;
-            puntosQuiz = 0;
-
-            mostrarPreguntaQuiz();
-        }
-
-
-        function mostrarPreguntaQuiz() {
-
-            const contenido =
-                document.getElementById("contenido");
-
-            if (preguntaActual >= preguntas.length) {
-
-                contenido.innerHTML = `
-                    <h1>🏆 Quiz terminado</h1>
-
-                    <div class="tarjeta">
-
-                        <h2>
-                            Tu puntuación:
-                            ${puntosQuiz}/${preguntas.length}
-                        </h2>
-
-                        <p>
-                            ${
-                                puntosQuiz === preguntas.length
-                                ? "🔥 ¡Perfecto!"
-                                : puntosQuiz >= 3
-                                ? "👏 ¡Muy bien!"
-                                : "⚽ ¡Seguí practicando!"
-                            }
-                        </p>
-
-                        <button class="boton"
-                            onclick="quiz()">
-                            Jugar otra vez
-                        </button>
-
-                        <button class="boton"
-                            onclick="mostrar('juegos')">
-                            Volver a juegos
-                        </button>
-
-                    </div>
-                `;
-
-                return;
-            }
-
-
-            const pregunta =
-                preguntas[preguntaActual];
-
-            let botones = "";
-
-            pregunta.opciones.forEach(function(opcion) {
-
-                botones += `
                     <button
-                        class="opcion"
-                        onclick="responderQuiz('${opcion}')">
-                        ${opcion}
+                        class="boton"
+                        onclick="mostrar('juegos')">
+
+                        Jugar
+
                     </button>
-                `;
-            });
 
-
-            contenido.innerHTML = `
-
-                <h1>🧠 Quiz de fútbol</h1>
-
-                <div class="marcador">
-                    Pregunta ${preguntaActual + 1}
-                    / ${preguntas.length}
-                    <br>
-                    ⭐ Puntos: ${puntosQuiz}
                 </div>
+
+
+                <div class="mini">
+
+                    <div class="escudo">🏆</div>
+
+                    <h2>Modo Carrera</h2>
+
+                    <p>
+
+                        Elegí un equipo
+                        e intentá salir campeón.
+
+                    </p>
+
+                    <button
+                        class="boton"
+                        onclick="mostrar('carrera')">
+
+                        Empezar
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* EQUIPOS */
+
+    else if (seccion === "equipos") {
+
+        contenido.innerHTML = `
+
+            <h1>⚽ Equipos</h1>
+
+            <input
+
+                class="buscador"
+
+                id="buscarEquipo"
+
+                placeholder="🔎 Buscar equipo..."
+
+                oninput="buscarEquipo()"
+
+            >
+
+            <div
+                id="listaEquipos"
+                class="grid">
+            </div>
+
+        `;
+
+        mostrarEquipos(equipos);
+
+    }
+
+
+    /* JUGADORES */
+
+    else if (seccion === "jugadores") {
+
+        contenido.innerHTML = `
+
+            <h1>👤 Jugadores</h1>
+
+            <input
+
+                class="buscador"
+
+                id="buscarJugador"
+
+                placeholder="🔎 Buscar jugador..."
+
+                oninput="buscarJugador()"
+
+            >
+
+            <div
+                id="listaJugadores"
+                class="grid">
+            </div>
+
+        `;
+
+        mostrarJugadores(jugadores);
+
+    }
+
+
+    /* PARTIDOS */
+
+    else if (seccion === "partidos") {
+
+        contenido.innerHTML = `
+
+            <h1>🏆 Partidos</h1>
+
+
+            <div class="tarjeta">
+
+                <h2>
+                    🟡⚫ Peñarol
+                    2 - 1
+                    🔵⚪ Nacional
+                </h2>
+
+                <p>
+                    Finalizado
+                </p>
+
+            </div>
+
+
+            <div class="tarjeta">
+
+                <h2>
+                    ⚫🔵 Liverpool
+                    1 - 1
+                    🟣⚪ Defensor
+                </h2>
+
+                <p>
+                    Próximo partido
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* TABLA */
+
+    else if (seccion === "tabla") {
+
+        mostrarTabla();
+
+    }
+
+
+    /* NOTICIAS */
+
+    else if (seccion === "noticias") {
+
+        contenido.innerHTML = `
+
+            <h1>📰 Noticias</h1>
+
+
+            <div class="tarjeta">
+
+                <h2>
+                    🔥 Gran partido
+                </h2>
+
+                <p>
+                    Se prepara un gran encuentro.
+                </p>
+
+            </div>
+
+
+            <div class="tarjeta">
+
+                <h2>
+                    ⭐ Nueva figura
+                </h2>
+
+                <p>
+                    Un joven jugador
+                    comienza a destacarse.
+                </p>
+
+            </div>
+
+
+            <div class="tarjeta">
+
+                <h2>
+                    🏆 Nuevo torneo
+                </h2>
+
+                <p>
+                    Los equipos se preparan
+                    para competir.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* ESTADIOS */
+
+    else if (seccion === "estadios") {
+
+        contenido.innerHTML = `
+
+            <h1>🏟️ Estadios</h1>
+
+
+            <div class="grid">
+
+                <div class="mini">
+
+                    <div class="escudo">🏟️</div>
+
+                    <h2>
+                        Campeón del Siglo
+                    </h2>
+
+                    <p>
+                        Peñarol
+                    </p>
+
+                </div>
+
+
+                <div class="mini">
+
+                    <div class="escudo">🏟️</div>
+
+                    <h2>
+                        Gran Parque Central
+                    </h2>
+
+                    <p>
+                        Nacional
+                    </p>
+
+                </div>
+
+
+                <div class="mini">
+
+                    <div class="escudo">🏟️</div>
+
+                    <h2>
+                        Luis Franzini
+                    </h2>
+
+                    <p>
+                        Defensor Sporting
+                    </p>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* FICHAJES */
+
+    else if (seccion === "fichajes") {
+
+        contenido.innerHTML = `
+
+            <h1>🔄 Fichajes</h1>
+
+
+            <div class="tarjeta">
+
+                <h2>
+                    ⭐ Nuevo delantero
+                </h2>
+
+                <p>
+                    El equipo busca reforzar
+                    su ataque.
+                </p>
+
+            </div>
+
+
+            <div class="tarjeta">
+
+                <h2>
+                    🧤 Nuevo arquero
+                </h2>
+
+                <p>
+                    Se busca reforzar
+                    la portería.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* JUEGOS */
+
+    else if (seccion === "juegos") {
+
+        contenido.innerHTML = `
+
+            <h1>🎮 Juegos</h1>
+
+
+            <div class="grid">
+
+
+                <div class="mini">
+
+                    <div class="escudo">
+                        🧠
+                    </div>
+
+                    <h2>
+                        Quiz
+                    </h2>
+
+                    <button
+                        class="boton"
+                        onclick="quiz()">
+
+                        Jugar
+
+                    </button>
+
+                </div>
+
+
+                <div class="mini">
+
+                    <div class="escudo">
+                        🥅
+                    </div>
+
+                    <h2>
+                        Penales
+                    </h2>
+
+                    <button
+                        class="boton"
+                        onclick="penales()">
+
+                        Jugar
+
+                    </button>
+
+                </div>
+
+
+                <div class="mini">
+
+                    <div class="escudo">
+                        👤
+                    </div>
+
+                    <h2>
+                        Adiviná jugador
+                    </h2>
+
+                    <button
+                        class="boton"
+                        onclick="adivinarJugador()">
+
+                        Jugar
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* MODO CARRERA */
+
+    else if (seccion === "carrera") {
+
+        modoCarrera();
+
+    }
+
+}
+
+
+/* =====================================================
+   EQUIPOS
+===================================================== */
+
+function mostrarEquipos(lista) {
+
+    const contenedor =
+        document.getElementById("listaEquipos");
+
+    contenedor.innerHTML = "";
+
+
+    lista.forEach(function(equipo) {
+
+        contenedor.innerHTML += `
+
+            <div class="mini">
+
+                <div class="escudo">
+                    ${equipo.escudo}
+                </div>
+
+                <h2>
+                    ${equipo.nombre}
+                </h2>
+
+                <button
+                    class="boton"
+                    onclick="verEquipo('${equipo.nombre}')">
+
+                    Ver equipo
+
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+function buscarEquipo() {
+
+    const texto =
+        document
+        .getElementById("buscarEquipo")
+        .value
+        .toLowerCase();
+
+
+    const resultados =
+        equipos.filter(function(equipo) {
+
+            return equipo.nombre
+                .toLowerCase()
+                .includes(texto);
+
+        });
+
+
+    mostrarEquipos(resultados);
+
+}
+
+
+function verEquipo(nombre) {
+
+    const equipo =
+        equipos.find(function(e) {
+
+            return e.nombre === nombre;
+
+        });
+
+
+    document.getElementById("contenido")
+        .innerHTML = `
+
+            <h1>
+                ${equipo.escudo}
+                ${equipo.nombre}
+            </h1>
+
+            <div class="tarjeta">
+
+                <h2>
+                    Información
+                </h2>
+
+                <p>
+                    Equipo de fútbol
+                </p>
+
+                <p>
+                    ⭐ Nivel: 80
+                </p>
+
+                <p>
+                    🏆 Títulos: 5
+                </p>
+
+            </div>
+
+            <button
+                class="boton"
+                onclick="mostrar('equipos')">
+
+                ← Volver
+
+            </button>
+
+        `;
+
+}
+
+
+/* =====================================================
+   JUGADORES
+===================================================== */
+
+function mostrarJugadores(lista) {
+
+    const contenedor =
+        document.getElementById("listaJugadores");
+
+    contenedor.innerHTML = "";
+
+
+    lista.forEach(function(jugador) {
+
+        contenedor.innerHTML += `
+
+            <div class="mini">
+
+                <div class="escudo">
+                    👤
+                </div>
+
+                <h2>
+                    ${jugador.nombre}
+                </h2>
+
+                <p>
+                    ${jugador.posicion}
+                </p>
+
+                <p>
+                    ${jugador.pais}
+                </p>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+function buscarJugador() {
+
+    const texto =
+        document
+        .getElementById("buscarJugador")
+        .value
+        .toLowerCase();
+
+
+    const resultados =
+        jugadores.filter(function(jugador) {
+
+            return jugador.nombre
+                .toLowerCase()
+                .includes(texto);
+
+        });
+
+
+    mostrarJugadores(resultados);
+
+}
+
+
+/* =====================================================
+   TABLA
+===================================================== */
+
+let tabla = [
+
+    {
+        equipo: "Peñarol",
+        puntos: 10
+    },
+
+    {
+        equipo: "Nacional",
+        puntos: 8
+    },
+
+    {
+        equipo: "Liverpool",
+        puntos: 6
+    },
+
+    {
+        equipo: "Defensor Sporting",
+        puntos: 4
+    },
+
+    {
+        equipo: "Cerro Largo",
+        puntos: 3
+    }
+
+];
+
+
+function mostrarTabla() {
+
+    tabla.sort(function(a, b) {
+
+        return b.puntos - a.puntos;
+
+    });
+
+
+    let html = `
+
+        <h1>
+            📊 Tabla
+        </h1>
+
+    `;
+
+
+    tabla.forEach(function(equipo, indice) {
+
+        html += `
+
+            <div class="tarjeta">
+
+                <h2>
+
+                    ${indice + 1}°
+                    ${equipo.equipo}
+
+                </h2>
+
+                <p class="puntos">
+
+                    ${equipo.puntos}
+                    puntos
+
+                </p>
+
+            </div>
+
+        `;
+
+    });
+
+
+    document.getElementById("contenido")
+        .innerHTML = html;
+
+}
+
+
+/* =====================================================
+   QUIZ
+===================================================== */
+
+let pregunta = 0;
+
+let puntos = 0;
+
+
+const preguntas = [
+
+    {
+        texto: "¿Cuántos jugadores tiene un equipo en cancha?",
+        opciones: ["9", "10", "11", "12"],
+        correcta: "11"
+    },
+
+    {
+        texto: "¿Qué tarjeta significa expulsión?",
+        opciones: ["Azul", "Amarilla", "Roja", "Verde"],
+        correcta: "Roja"
+    },
+
+    {
+        texto: "¿Qué selección ganó el Mundial 2022?",
+        opciones: ["Argentina", "Brasil", "Francia", "Uruguay"],
+        correcta: "Argentina"
+    },
+
+    {
+        texto: "¿Qué posición ocupa normalmente el arquero?",
+        opciones: ["Ataque", "Portería", "Mediocampo", "Defensa"],
+        correcta: "Portería"
+    }
+
+];
+
+
+function quiz() {
+
+    pregunta = 0;
+
+    puntos = 0;
+
+    mostrarPregunta();
+
+}
+
+
+function mostrarPregunta() {
+
+    if (pregunta >= preguntas.length) {
+
+        document.getElementById("contenido")
+            .innerHTML = `
+
+                <h1>
+                    🏆 Quiz terminado
+                </h1>
 
                 <div class="tarjeta">
 
                     <h2>
-                        ${pregunta.pregunta}
+                        ${puntos}
+                        /
+                        ${preguntas.length}
                     </h2>
-
-                    ${botones}
-
-                </div>
-            `;
-        }
-
-
-        function responderQuiz(respuesta) {
-
-            if (
-                respuesta ===
-                preguntas[preguntaActual].correcta
-            ) {
-                puntosQuiz++;
-            }
-
-            preguntaActual++;
-
-            mostrarPreguntaQuiz();
-        }
-
-
-        // ==================================================
-        // JUEGO 2: PENALES
-        // ==================================================
-
-        let goles = 0;
-        let tiros = 0;
-
-
-        function penales() {
-
-            goles = 0;
-            tiros = 0;
-
-            mostrarPenales();
-        }
-
-
-        function mostrarPenales() {
-
-            const contenido =
-                document.getElementById("contenido");
-
-            contenido.innerHTML = `
-
-                <h1>🥅 Tiros Penales</h1>
-
-                <div class="marcador">
-                    ⚽ Goles: ${goles}
-                    |
-                    🎯 Tiros: ${tiros}/5
-                </div>
-
-                <div class="zona-penal">
-
-                    <div class="arquero">
-                        🧤
-                    </div>
-
-                </div>
-
-                <p>
-                    Elegí dónde patear:
-                </p>
-
-                <button class="boton"
-                    onclick="patear('izquierda')">
-                    ⬅️ Izquierda
-                </button>
-
-                <button class="boton"
-                    onclick="patear('centro')">
-                    ⬆️ Centro
-                </button>
-
-                <button class="boton"
-                    onclick="patear('derecha')">
-                    ➡️ Derecha
-                </button>
-
-                <div
-                    id="resultadoPenal"
-                    class="resultado">
-                </div>
-
-            `;
-        }
-
-
-        function patear(direccion) {
-
-            if (tiros >= 5) {
-                return;
-            }
-
-            const direcciones = [
-                "izquierda",
-                "centro",
-                "derecha"
-            ];
-
-            const arquero =
-                direcciones[
-                    Math.floor(
-                        Math.random() * direcciones.length
-                    )
-                ];
-
-            tiros++;
-
-            const resultado =
-                document.getElementById(
-                    "resultadoPenal"
-                );
-
-
-            if (direccion === arquero) {
-
-                resultado.innerHTML =
-                    "🧤 ¡ATAJÓ EL ARQUERO!";
-
-            } else {
-
-                goles++;
-
-                resultado.innerHTML =
-                    "⚽ ¡GOOOOOOL! 🔥";
-            }
-
-
-            setTimeout(function() {
-
-                if (tiros >= 5) {
-
-                    const contenido =
-                        document.getElementById(
-                            "contenido"
-                        );
-
-                    contenido.innerHTML = `
-
-                        <h1>🏆 Penales terminados</h1>
-
-                        <div class="tarjeta">
-
-                            <h2>
-                                ${goles} goles de 5
-                            </h2>
-
-                            <button
-                                class="boton"
-                                onclick="penales()">
-                                🔄 Jugar otra vez
-                            </button>
-
-                            <button
-                                class="boton"
-                                onclick="mostrar('juegos')">
-                                🎮 Otros juegos
-                            </button>
-
-                        </div>
-                    `;
-
-                } else {
-
-                    mostrarPenales();
-
-                }
-
-            }, 900);
-        }
-
-
-        // ==================================================
-        // JUEGO 3: ADIVINÁ EL JUGADOR
-        // ==================================================
-
-        let jugadorSecreto = "";
-        let intentosJugador = 0;
-
-
-        const jugadoresJuego = [
-
-            {
-                nombre: "Federico Valverde",
-                pista1: "🇺🇾 Soy uruguayo.",
-                pista2: "🏟️ Juego en el Real Madrid.",
-                pista3: "🎯 Soy mediocampista."
-            },
-
-            {
-                nombre: "Luis Suárez",
-                pista1: "🇺🇾 Soy uruguayo.",
-                pista2: "⚽ Soy delantero.",
-                pista3: "🔴 Jugué en el Liverpool."
-            },
-
-            {
-                nombre: "Darwin Núñez",
-                pista1: "🇺🇾 Soy uruguayo.",
-                pista2: "⚽ Soy delantero.",
-                pista3: "🔴 Juego en el Liverpool."
-            },
-
-            {
-                nombre: "Ronald Araújo",
-                pista1: "🇺🇾 Soy uruguayo.",
-                pista2: "🔵 Juego en Barcelona.",
-                pista3: "🛡️ Soy defensor."
-            }
-
-        ];
-
-
-        function adivinarJugador() {
-
-            const jugador =
-                jugadoresJuego[
-                    Math.floor(
-                        Math.random() *
-                        jugadoresJuego.length
-                    )
-                ];
-
-            jugadorSecreto = jugador.nombre;
-            intentosJugador = 0;
-
-            mostrarJuegoJugador(jugador);
-        }
-
-
-        function mostrarJuegoJugador(jugador) {
-
-            const contenido =
-                document.getElementById("contenido");
-
-            contenido.innerHTML = `
-
-                <h1>👤 Adiviná el jugador</h1>
-
-                <div class="tarjeta">
-
-                    <h2>💡 Pistas</h2>
-
-                    <p>${jugador.pista1}</p>
-
-                    <p>${jugador.pista2}</p>
-
-                    <p>${jugador.pista3}</p>
-
-                    <input
-                        class="buscador"
-                        id="respuestaJugador"
-                        placeholder="Escribí el nombre..."
-                    >
-
-                    <br>
 
                     <button
                         class="boton"
-                        onclick="comprobarJugador()">
-                        Adivinar
-                    </button>
+                        onclick="quiz()">
 
-                    <div
-                        id="resultadoJugador"
-                        class="resultado">
-                    </div>
+                        🔄 Otra vez
+
+                    </button>
 
                 </div>
 
             `;
+
+        return;
+
+    }
+
+
+    const p =
+        preguntas[pregunta];
+
+
+    let botones = "";
+
+
+    p.opciones.forEach(function(opcion) {
+
+        botones += `
+
+            <button
+                class="boton"
+                onclick="responder('${opcion}')">
+
+                ${opcion}
+
+            </button>
+
+        `;
+
+    });
+
+
+    document.getElementById("contenido")
+        .innerHTML = `
+
+            <h1>
+                🧠 Quiz
+            </h1>
+
+            <div class="tarjeta">
+
+                <h2>
+                    ${p.texto}
+                </h2>
+
+                ${botones}
+
+                <p>
+                    Pregunta
+                    ${pregunta + 1}
+                    /
+                    ${preguntas.length}
+                </p>
+
+            </div>
+
+        `;
+
+}
+
+
+function responder(respuesta) {
+
+    if (
+        respuesta ===
+        preguntas[pregunta].correcta
+    ) {
+
+        puntos++;
+
+    }
+
+
+    pregunta++;
+
+    mostrarPregunta();
+
+}
+
+
+/* =====================================================
+   PENALES
+===================================================== */
+
+let goles = 0;
+
+let tiros = 0;
+
+
+function penales() {
+
+    goles = 0;
+
+    tiros = 0;
+
+    mostrarPenales();
+
+}
+
+
+function mostrarPenales() {
+
+    document.getElementById("contenido")
+        .innerHTML = `
+
+            <h1>
+                🥅 Penales
+            </h1>
+
+            <div class="tarjeta">
+
+                <h2>
+                    ⚽ ${goles}
+                    |
+                    🎯 ${tiros}/5
+                </h2>
+
+                <button
+                    class="boton"
+                    onclick="patear('izquierda')">
+
+                    ⬅️ Izquierda
+
+                </button>
+
+
+                <button
+                    class="boton"
+                    onclick="patear('centro')">
+
+                    ⬆️ Centro
+
+                </button>
+
+
+                <button
+                    class="boton"
+                    onclick="patear('derecha')">
+
+                    ➡️ Derecha
+
+                </button>
+
+
+                <div id="resultadoPenal"></div>
+
+            </div>
+
+        `;
+
+}
+
+
+function patear(direccion) {
+
+    if (tiros >= 5) {
+
+        return;
+
+    }
+
+
+    const opciones = [
+        "izquierda",
+        "centro",
+        "derecha"
+    ];
+
+
+    const arquero =
+        opciones[
+            Math.floor(
+                Math.random() *
+                opciones.length
+            )
+        ];
+
+
+    tiros++;
+
+
+    if (direccion !== arquero) {
+
+        goles++;
+
+        document.getElementById("resultadoPenal")
+            .innerHTML =
+            "<h2>⚽ ¡GOOOOOL!</h2>";
+
+    }
+
+    else {
+
+        document.getElementById("resultadoPenal")
+            .innerHTML =
+            "<h2>🧤 ¡ATAJÓ!</h2>";
+
+    }
+
+
+    setTimeout(function() {
+
+        if (tiros >= 5) {
+
+            document.getElementById("contenido")
+                .innerHTML = `
+
+                    <h1>
+                        🏆 Final
+                    </h1>
+
+                    <div class="tarjeta">
+
+                        <h2>
+                            ${goles}
+                            goles de 5
+                        </h2>
+
+                        <button
+                            class="boton"
+                            onclick="penales()">
+
+                            🔄 Otra vez
+
+                        </button>
+
+                    </div>
+
+                `;
+
         }
 
+        else {
 
-        function comprobarJugador() {
+            mostrarPenales();
 
-            const respuesta =
-                document
-                .getElementById("respuestaJugador")
-                .value
-                .trim()
-                .toLowerCase();
-
-            const correcto =
-                jugadorSecreto
-                .toLowerCase();
-
-
-            if (respuesta === correcto) {
-
-                document
-                .getElementById("resultadoJugador")
-                .innerHTML =
-                    "🎉 ¡CORRECTO! Era " +
-                    jugadorSecreto;
-
-                return;
-            }
-
-
-            intentosJugador++;
-
-            if (intentosJugador >= 3) {
-
-                document
-                .getElementById("resultadoJugador")
-                .innerHTML =
-                    "❌ Se acabaron los intentos. Era " +
-                    jugadorSecreto;
-
-            } else {
-
-                document
-                .getElementById("resultadoJugador")
-                .innerHTML =
-                    "❌ Incorrecto. Te quedan " +
-                    (3 - intentosJugador) +
-                    " intentos.";
-            }
         }
 
+    }, 700);
 
-        // =========================
-        // INICIAR PÁGINA
-        // =========================
+}
 
-        mostrar("inicio");
 
-    </script>
+/* =====================================================
+   ADIVINÁ EL JUGADOR
+===================================================== */
+
+const jugadoresJuego = [
+
+    {
+        nombre: "Federico Valverde",
+        pistas: [
+            "🇺🇾 Soy uruguayo",
+            "⚪ Juego en el Real Madrid",
+            "🎯 Soy mediocampista"
+        ]
+    },
+
+    {
+        nombre: "Luis Suárez",
+        pistas: [
+            "🇺🇾 Soy uruguayo",
+            "⚽ Soy delantero",
+            "🔴 Jugué en Liverpool"
+        ]
+    },
+
+    {
+        nombre: "Ronald Araújo",
+        pistas: [
+            "🇺🇾 Soy uruguayo",
+            "🔵 Juego en Barcelona",
+            "🛡️ Soy defensor"
+        ]
+    }
+
+];
+
+
+let jugadorSecreto;
+
+
+function adivinarJugador() {
+
+    jugadorSecreto =
+        jugadoresJuego[
+            Math.floor(
+                Math.random() *
+                jugadoresJuego.length
+            )
+        ];
+
+
+    document.getElementById("contenido")
+        .innerHTML = `
+
+            <h1>
+                👤 Adiviná el jugador
+            </h1>
+
+            <div class="tarjeta">
+
+                <p>
+                    ${jugadorSecreto.pistas[0]}
+                </p>
+
+                <p>
+                    ${jugadorSecreto.pistas[1]}
+                </p>
+
+                <p>
+                    ${jugadorSecreto.pistas[2]}
+                </p>
+
+
+                <input
+                    class="buscador"
+                    id="respuestaJugador"
+                    placeholder="¿Quién es?"
+                >
+
+
+                <button
+                    class="boton"
+                    onclick="comprobarJugador()">
+
+                    Adivinar
+
+                </button>
+
+
+                <div
+                    id="resultadoJugador">
+                </div>
+
+            </div>
+
+        `;
+
+}
+
+
+function comprobarJugador() {
+
+    const respuesta =
+        document
+        .getElementById("respuestaJugador")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    if (
+        respuesta ===
+        jugadorSecreto.nombre.toLowerCase()
+    ) {
+
+        document.getElementById("resultadoJugador")
+            .innerHTML =
+            "<h2>🎉 ¡CORRECTO!</h2>";
+
+    }
+
+    else {
+
+        document.getElementById("resultadoJugador")
+            .innerHTML =
+            "<p class='incorrecto'>❌ Incorrecto</p>";
+
+    }
+
+}
+
+
+/* =====================================================
+   MODO CARRERA
+===================================================== */
+
+let miEquipo = null;
+
+let puntosCarrera = 0;
+
+
+function modoCarrera() {
+
+    if (miEquipo === null) {
+
+        document.getElementById("contenido")
+            .innerHTML = `
+
+                <h1>
+                    🏆 Modo Carrera
+                </h1>
+
+                <div class="tarjeta">
+
+                    <h2>
+                        Elegí tu equipo
+                    </h2>
+
+                    ${equipos.map(function(equipo) {
+
+                        return `
+
+                            <button
+                                class="boton"
+                                onclick="elegirEquipo('${equipo.nombre}')">
+
+                                ${equipo.escudo}
+                                ${equipo.nombre}
+
+                            </button>
+
+                        `;
+
+                    }).join("")}
+
+                </div>
+
+            `;
+
+    }
+
+    else {
+
+        mostrarCarrera();
+
+    }
+
+}
+
+
+function elegirEquipo(nombre) {
+
+    miEquipo = nombre;
+
+    puntosCarrera = 0;
+
+    mostrarCarrera();
+
+}
+
+
+function mostrarCarrera() {
+
+    document.getElementById("contenido")
+        .innerHTML = `
+
+            <h1>
+                🏆 Modo Carrera
+            </h1>
+
+            <div class="tarjeta">
+
+                <h2>
+                    ${miEquipo}
+                </h2>
+
+                <p>
+                    ⭐ Puntos:
+                    ${puntosCarrera}
+                </p>
+
+                <button
+                    class="boton"
+                    onclick="jugarPartido()">
+
+                    ⚽ Jugar partido
+
+                </button>
+
+
+                <button
+                    class="boton"
+                    onclick="reiniciarCarrera()">
+
+                    🔄 Cambiar equipo
+
+                </button>
+
+            </div>
+
+        `;
+
+}
+
+
+function jugarPartido() {
+
+    const resultado =
+        Math.floor(
+            Math.random() * 3
+        );
+
+
+    if (resultado === 0) {
+
+        puntosCarrera += 3;
+
+        alert("🔥 ¡GANASTE! +3 puntos");
+
+    }
+
+    else if (resultado === 1) {
+
+        puntosCarrera += 1;
+
+        alert("🤝 ¡EMPATE! +1 punto");
+
+    }
+
+    else {
+
+        alert("❌ PERDISTE");
+
+    }
+
+
+    mostrarCarrera();
+
+}
+
+
+function reiniciarCarrera() {
+
+    miEquipo = null;
+
+    puntosCarrera = 0;
+
+    modoCarrera();
+
+}
+
+
+/* =====================================================
+   MODO OSCURO / CLARO
+===================================================== */
+
+function cambiarTema() {
+
+    document.body.classList.toggle("claro");
+
+}
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+mostrar("inicio");
+
+</script>
 
 </body>
+
 </html>
