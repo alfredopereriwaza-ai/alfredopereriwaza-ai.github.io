@@ -179,7 +179,7 @@
 
     <button onclick="mostrar('jugadores')">👤 Jugadores</button>
 
-    <button onclick="mostrar('partidos')">🏆 Partidos</button>
+    <button onclick="mostrar('partidos')"😎 Partidos</button>
 
     <button onclick="mostrar('tabla')">📊 Tabla</button>
 
@@ -1114,6 +1114,17 @@ function mostrarPregunta() {
 
                 </div>
 
+<button onclick="volverAJuegos()">
+  🎮 Volver a Juegos
+</button>
+
+<script>
+function volverAJuegos() {
+  document.getElementById("juegos").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+</script>
             `;
 
         return;
